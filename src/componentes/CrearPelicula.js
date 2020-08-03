@@ -48,7 +48,7 @@ const CrearPelicula = props => {
         />
         {isEditing ? (
           <Button
-            type="submit"
+            type="button"
             variant="outlined"
             className={classes.button}
             onClick={e => saveUpdate(e, id)}

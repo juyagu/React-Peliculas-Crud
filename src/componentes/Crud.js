@@ -18,6 +18,7 @@ class Crud extends Component {
             isEditing: false
         }
         this.actualizarPelicula = this.actualizarPelicula.bind(this);
+        this.saveUpdate = this.saveUpdate.bind(this);
     }
 
     handleChange = e => {
@@ -33,7 +34,8 @@ class Crud extends Component {
         var obj = {
             titulo: titulo,
             director: director,
-            genero: genero
+            genero: genero,
+            foto: "Foto por default"
         }
         fetch("http://localhost:3001/angular5/peliculas", {
             method: 'POST',
@@ -52,7 +54,8 @@ class Crud extends Component {
         this.setState({
             titulo: "",
             director: "",
-            genero: ""
+            genero: "",
+            isEditing: false
         })
     }
 
@@ -61,7 +64,7 @@ class Crud extends Component {
             method: 'delete'
         })
             .then(res => res.json())
-            .then(resultado => this.obtenerPeliculas)
+            .then(resultado => this.obtenerPeliculas())
     }
 
     componentDidMount() {
@@ -98,7 +101,8 @@ class Crud extends Component {
             })
     }
 
-    saveUpdate(id) {
+    saveUpdate(e,id) {
+        console.log(e,id)
         const { titulo, director, genero } = this.state;
         if (!titulo || !director || !genero) return;
         var obj = {
@@ -115,7 +119,9 @@ class Crud extends Component {
             body: JSON.stringify(obj)
         })
             .then(res => res.json())
-            .then(respuesta => this.obtenerPeliculas())
+            .then(respuesta => {
+                this.obtenerPeliculas();
+            })
             .then(() => this.reset())
     }
 
